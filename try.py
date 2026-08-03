@@ -1,74 +1,75 @@
-'''
-PyQt Radio Buttons
-'''
-
+# omporting modules
 import sys
-from PyQt5.QtWidgets import (QMainWindow, QWidget, QLayout, QPushButton, QLabel, QApplication, QRadioButton, QButtonGroup,
-                             QBoxLayout, QVBoxLayout, QHBoxLayout, QGridLayout)
-from PyQt5.QtGui import (QPixmap, QIcon, QFont)
-from PyQt5.QtCore import (Qt, QSize)
+from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout)
+from PyQt5.QtGui import (QFont, QFontDatabase, QIcon, QPixmap)
+from PyQt5.QtCore import (Qt, QTimer, QTime)
 
-class Main_Window(QMainWindow):
+# construction digital clock class [Main Window]
+class Digital_Clock(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowIcon(QIcon (r"C:\Users\USER\Documents\CODE\PYTHON SHIT\BRO CODE\b1682d1c-7ef4-4805-9464-f0031e42157f.JPG"))
-        self.setWindowTitle ("RADIO BUTTONS")
-        self.setGeometry(1000, 200, 600, 600)
-        self.setStyleSheet("background-color: grey; "
-                           )
 
-        #creatign radiobuttons
-        self.radio1 = QRadioButton("Visa", self)
-        self.radio2 = QRadioButton("MasterCard", self)
-        self.radio3 = QRadioButton("Verve", self)
+        #setting up time display label
+        self.time_label = QLabel(self)
+        ##creating time objects to set style sheet
+        self.setObjectName("clockWindow")
+        self.time_label.setObjectName("time_label")
 
-        self.radio4 = QRadioButton("In-Store", self)
-        self.radio5 = QRadioButton("Online", self)
-
-        self.button_group1 = QButtonGroup(self)
-        self.button_group2 = QButtonGroup(self)
+        # setting up timer to update time
+        self.timer = QTimer(self)
 
         self.initUI()
+
         pass
+    # defining init UI function
     def initUI(self):
-        self.radio1.setGeometry(0, 0, 300, 50)
-        self.radio2.setGeometry(0, 50, 300, 50)
-        self.radio3.setGeometry(0, 100, 300, 50)
 
-        self.radio4.setGeometry(0, 150, 300, 50)
-        self.radio5.setGeometry(0, 200, 300, 50)
+        # editing main window
+        self.setWindowTitle("I HOPE I CAN HARD CODE THIS")
+        self.setWindowIcon(QIcon(r"C:\Users\USER\Documents\CODE\PYTHON SHIT\BRO CODE\b1682d1c-7ef4-4805-9464-f0031e42157f.JPG"))
+        self.setGeometry(600, 800, 300, 100)
 
-        self.setStyleSheet("QRadioButton{"\
-                           "font-size: 40px; "
-                           "font-family: Times New Roman; "
-                           "padding: 10px; "
-                           "}")
-        
+        # editing time label with custom font and colour
+        self.time_label.setAlignment(Qt.AlignCenter)
+        font_id = QFontDatabase.addApplicationFont(r"BRO CODE/ds_digital/DS-DIGIT.TTF")
+        font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
+        my_font = QFont(font_family, 150)
+        self.time_label.setFont(my_font)
+        self.timer.timeout.connect(self.update_time)
+        self.timer.start(1000)  # update every second
 
-        self.button_group1.addButton(self.radio1)
-        self.button_group1.addButton(self.radio2)
-        self.button_group1.addButton(self.radio3)
+        #setting up global style sheet
+        self.setObjectName("clockWindow")
+        self.time_label.setObjectName("time_label")
+        self.setStyleSheet("""
+                            QWidget#clockWindow {
+                                background-color: black;
+                            }
 
-        self.button_group2.addButton(self.radio4)
-        self.button_group2.addButton(self.radio5)
+                            QLabel#time_label {
+                                color: hsv(50, 255, 70);
+                                background-color: transparent;
+                            }
+                            """)                                  
 
-        self.radio1.toggled.connect(self.radio_button_changed)
-        self.radio2.toggled.connect(self.radio_button_changed)
-        self.radio3.toggled.connect(self.radio_button_changed)
-        self.radio4.toggled.connect(self.radio_button_changed)
-        self.radio5.toggled.connect(self.radio_button_changed)
+        # setting up widget layout
+        VBox = QVBoxLayout()
+        VBox.addWidget(self.time_label)
+        self.setLayout(VBox)
+
         pass
-    def radio_button_changed(self):
-        radio_button = self.sender()
-        if radio_button.isChecked():
-            print(f"{radio_button.text()} is selected")
-        #print("selection made!!!")
+    # defining update time function
+    def update_time(self):
+
+        # getting current time to update
+        current_time = QTime.currentTime()
+        self.time_label.setText(current_time.toString("hh:mm:ss AP"))
+
         pass
 
-def main():
+# calling main function
+if __name__ == "__main__":
     App = QApplication(sys.argv)
-    Window = Main_Window()
+    Window = Digital_Clock()
     Window.show()
     sys.exit(App.exec_())
-if __name__ == "__main__":
-    main()

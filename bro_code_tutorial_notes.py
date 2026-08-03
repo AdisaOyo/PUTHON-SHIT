@@ -2028,4 +2028,120 @@ if __name__ == "__main__":
     main()
 
 
-    
+'''
+PyQt5 Line edit widgets
+'''
+
+import sys
+from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QLayout, QLineEdit, QPushButton)
+from PyQt5.QtGui import (QPixmap, QFont, QIcon)
+from PyQt5.QtCore import (Qt, QSize)
+
+class Main_Window(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("PyQt5 Line Edit Widgets")
+        self.setGeometry(1000, 200, 500, 500)
+        self.setWindowIcon(QIcon(r"C:\Users\USER\Documents\CODE\PYTHON SHIT\BRO CODE\b1682d1c-7ef4-4805-9464-f0031e42157f.JPG"))
+        self.line_edit = QLineEdit(self)
+        self.button = QPushButton("Click Me", self)
+
+        self.initUI()
+    def initUI(self):
+        self.line_edit.setGeometry(10, 10, 200, 40)
+        self.line_edit.setStyleSheet("QLineEdit {background-color: lightgray; color: black; font-size: 16px; border: 2px solid gray; border-radius: 5px; padding: 5px; font-family: Times New Roman; } " \
+                                     "QLineEdit:focus {border: 2px solid blue;}")
+        self.button.setGeometry(210, 10, 100, 40)
+        self.button.setStyleSheet("font-size: 20px;"
+                                  "font-family: Times New Roman;" )
+        self.button.clicked.connect(self.click)
+        self.line_edit.setPlaceholderText("Go Crazy")
+        pass
+    def click(self):
+        text = self.line_edit.text()
+        print(f"You entered: {text}")
+def main():
+    App = QApplication(sys.argv)
+    Window = Main_Window()
+    Window.show()
+    sys.exit(App.exec_())
+
+if __name__ == "__main__":
+    main()
+
+
+
+'''
+PyQt5 advanced style sheets
+'''
+import sys
+from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QLayout, QLabel, QPushButton, QGridLayout, QHBoxLayout)
+from PyQt5.QtGui import (QFont, QIcon, QPixmap)
+from PyQt5.QtCore import (Qt, QSize)
+
+class Main_Window(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("PyQt5 Example")
+
+        self.button1 = QPushButton("Button 1")
+        self.button2 = QPushButton("Button 2")
+        self.button3 = QPushButton("Button 3")
+
+        self.initUI()
+
+    def initUI(self):
+        sentral_widget = QWidget()
+        self.setCentralWidget(sentral_widget)
+
+        HBox = QHBoxLayout()
+
+        HBox.addWidget(self.button1)
+        HBox.addWidget(self.button2)
+        HBox.addWidget(self.button3)
+
+        sentral_widget.setLayout(HBox)
+
+        self.button1.setObjectName("button1")
+        self.button2.setObjectName("button2")
+        self.button3.setObjectName("button3")
+
+        self.setStyleSheet('''
+                            QPushButton{
+                                font-size: 40px; 
+                                font-family: Times New Roman;
+                                padding: 15px 75px;
+                                margin: 25px;
+                                border: 3px solid;
+                                border-radius: 15px;
+                            }
+                            QPushButton#button1{
+                                background-color: red;
+                            }
+                            QPushButton#button2{
+                                background-color: green;  
+                            }
+                            QPushButton#button3{
+                                background-color: blue;                            
+                            }
+                            QPushButton#button1:hover{
+                                background-color: grey;                                            
+                            }
+                            QPushButton#button2:hover{
+                                background-color: grey;                             
+                            }
+                            QPushButton#button3:hover{
+                                background-color: grey;                             
+                            }                            
+                          ''')
+
+        pass
+   
+
+def main():
+    app = QApplication(sys.argv)
+    window = Main_Window()
+    window.show()
+    sys.exit(app.exec_())
+if __name__ == "__main__":
+    main()   

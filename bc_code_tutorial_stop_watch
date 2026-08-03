@@ -1,0 +1,30 @@
+import sys
+from PyQt5.QtWidgets import (QWidget, QApplication, QLabel, QPushButton, QLayout)
+from PyQt5.QtGui import (QFont, QPixmap, QIcon)
+from PyQt5.QtCore import (Qt, QTimer, QTime, QSize)
+
+# construction stop watch class
+class Stop_Watch(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+
+        pass
+    #defining initUI() function
+    def initUI(self):
+
+
+        pass
+    #defining update timer
+    def update_timer(self):
+
+        
+        pass
+#calling program to run
+if __name__ == "__main__":
+    App = QApplication(sys.argv)
+    Window = Stop_Watch()
+    Window.show()
+    sys.exit(App.exec_())
